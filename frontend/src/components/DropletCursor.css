@@ -1,0 +1,108 @@
+/* Droplet Cursor Styles */
+.droplet-cursor {
+  position: fixed;
+  width: 24px;
+  height: 32px;
+  pointer-events: none;
+  z-index: 99999;
+  transition: transform 0.08s ease-out;
+  will-change: transform, left, top;
+}
+
+.droplet-cursor.moving {
+  animation: dropletSway 0.3s ease-in-out infinite alternate;
+}
+
+.droplet-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 4px rgba(45, 90, 123, 0.3));
+}
+
+@keyframes dropletSway {
+  0% {
+    transform: translate(-50%, -50%) rotate(-5deg) scale(1);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(5deg) scale(1.05);
+  }
+}
+
+/* Splash Container */
+.splash-container {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+}
+
+/* Individual splash droplets */
+.splash-droplet {
+  position: absolute;
+  width: var(--size, 6px);
+  height: var(--size, 6px);
+  background: linear-gradient(135deg, #87CEEB 0%, #5BA3D9 100%);
+  border-radius: 50%;
+  animation: splashOut 0.6s ease-out forwards;
+  animation-delay: var(--delay, 0ms);
+  opacity: 0;
+  box-shadow: 0 1px 3px rgba(45, 90, 123, 0.3);
+}
+
+@keyframes splashOut {
+  0% {
+    opacity: 1;
+    transform: rotate(var(--angle)) translateY(0) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateY(var(--distance, 40px)) scale(0.3);
+  }
+}
+
+/* Splash rings */
+.splash-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(135, 206, 235, 0.8);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ringExpand 0.5s ease-out forwards;
+}
+
+.splash-ring-2 {
+  animation-delay: 0.1s;
+  border-color: rgba(91, 163, 217, 0.6);
+}
+
+@keyframes ringExpand {
+  0% {
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+    border-width: 3px;
+  }
+  100% {
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+/* Make all interactive elements show pointer cursor internally but hide the actual cursor */
+button, a, input, [role="button"], .clickable {
+  cursor: none !important;
+}
+
+/* Ensure cursor is hidden everywhere */
+*, *::before, *::after {
+  cursor: none !important;
+}
+

@@ -1,0 +1,35 @@
+# AWS ALB Ingress with SSL/TLS
+# Prerequisites:
+# 1. Install AWS Load Balancer Controller in your EKS cluster
+# 2. Create an SSL certificate in AWS Certificate Manager (ACM)
+# 3. Replace <YOUR_DOMAIN> and <ACM_CERTIFICATE_ARN> with your values
+#
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spending-app-ingress
+  namespace: spending-app
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    # Replace with your ACM certificate ARN
+    alb.ingress.kubernetes.io/certificate-arn: <ACM_CERTIFICATE_ARN>
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+spec:
+  ingressClassName: alb
+  rules:
+    # Replace with your domain
+    - host: <YOUR_DOMAIN>
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-gateway
+                port:
+                  number: 80
+

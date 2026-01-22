@@ -1,0 +1,63 @@
+# ========================================
+# SENSITIVE FILES - NEVER COMMIT THESE
+# ========================================
+
+# Firebase Service Account (CRITICAL - contains private keys)
+ServiceAccountInfo/
+*.json.backup
+firebase-adminsdk*.json
+
+# Environment files with secrets
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+*.env
+
+# Kubernetes secrets (contains encoded credentials)
+infra/k8s/*-secret.yaml
+infra/k8s/secrets.yaml
+!infra/k8s/*-secret.yaml.example
+!infra/k8s/secrets.yaml.example
+
+# ========================================
+# Dependencies
+# ========================================
+node_modules/
+.pnpm-store/
+
+# ========================================
+# Build outputs
+# ========================================
+dist/
+build/
+target/
+*.jar
+*.class
+
+# ========================================
+# IDE and OS files
+# ========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ========================================
+# Logs
+# ========================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ========================================
+# Misc
+# ========================================
+.cache/
+.temp/
+*.bak
+

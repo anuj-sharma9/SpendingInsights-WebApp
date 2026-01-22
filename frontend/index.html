@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#87CEEB" />
+    <meta name="description" content="Spending Insights - Track your spending with beautiful analytics" />
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>" />
+    
+    <title>Spending Insights</title>
+    
+    <style>
+      /* Critical CSS - Prevents flash of unstyled content */
+      html {
+        background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 30%, #E0F4FF 100%);
+        min-height: 100vh;
+      }
+      
+      /* Loading state before React hydrates */
+      #root:empty::before {
+        content: '';
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        margin: -20px 0 0 -20px;
+        border: 3px solid rgba(255, 149, 0, 0.2);
+        border-top-color: #FF9500;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

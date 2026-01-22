@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/spending}
+    username: ${DB_USER:spending}
+    password: ${DB_PASSWORD:spending}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+app:
+  firebase:
+    serviceAccountPath: ${FIREBASE_SERVICE_ACCOUNT:/Users/anujsharma/Documents/SpendingWebApp/ServiceAccountInfo/ServiceAccount.json}
+    serviceAccountJson: ${FIREBASE_SERVICE_ACCOUNT_JSON:}

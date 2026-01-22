@@ -1,0 +1,67 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: spending
+      POSTGRES_USER: spending
+      POSTGRES_PASSWORD: spending
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U spending -d spending"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ../backend
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/spending
+      DB_USER: spending
+      DB_PASSWORD: spending
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      FIREBASE_SERVICE_ACCOUNT: /Users/anujsharma/Documents/SpendingWebApp/ServiceAccountInfo/ServiceAccount.json
+    volumes:
+      - /Users/anujsharma/Documents/SpendingWebApp/ServiceAccountInfo/ServiceAccount.json:/Users/anujsharma/Documents/SpendingWebApp/ServiceAccountInfo/ServiceAccount.json:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: on-failure
+
+  frontend:
+    build:
+      context: ../frontend
+      args:
+        VITE_FIREBASE_API_KEY: ${VITE_FIREBASE_API_KEY:-}
+        VITE_FIREBASE_AUTH_DOMAIN: ${VITE_FIREBASE_AUTH_DOMAIN:-}
+        VITE_FIREBASE_PROJECT_ID: ${VITE_FIREBASE_PROJECT_ID:-}
+        VITE_FIREBASE_APP_ID: ${VITE_FIREBASE_APP_ID:-}
+        VITE_API_BASE: /api
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:1.25-alpine
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8080:80"
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  pgdata:
