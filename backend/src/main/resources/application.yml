@@ -14,24 +14,26 @@ management:
 logging:
   level:
     org.springframework.security: DEBUG
+    com.zaxxer.hikari: DEBUG
 
 spring:
   datasource:
-    # Railway provides DATABASE_URL in format: postgresql://user:pass@host:port/db
-    # We need to convert to JDBC format or use individual components
-    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:spending}
+    # Use DATABASE_URL if provided (Railway format), otherwise fall back to components
+    url: ${DATABASE_URL:jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:spending}}
     username: ${PGUSER:spending}
     password: ${PGPASSWORD:spending}
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   data:
     redis:
-      host: ${REDISHOST:localhost}
-      port: ${REDISPORT:6379}
+      host: ${REDISHOST:${REDIS_HOST:localhost}}
+      port: ${REDISPORT:${REDIS_PORT:6379}}
 
 app:
   firebase:
