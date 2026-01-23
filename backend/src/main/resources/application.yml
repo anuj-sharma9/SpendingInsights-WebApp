@@ -17,9 +17,11 @@ logging:
 
 spring:
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/spending}
-    username: ${DB_USER:spending}
-    password: ${DB_PASSWORD:spending}
+    # Railway provides DATABASE_URL in format: postgresql://user:pass@host:port/db
+    # We need to convert to JDBC format or use individual components
+    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:spending}
+    username: ${PGUSER:spending}
+    password: ${PGPASSWORD:spending}
   jpa:
     hibernate:
       ddl-auto: update
@@ -28,8 +30,8 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   data:
     redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
+      host: ${REDISHOST:localhost}
+      port: ${REDISPORT:6379}
 
 app:
   firebase:
