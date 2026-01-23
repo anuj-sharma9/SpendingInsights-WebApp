@@ -14,12 +14,11 @@ management:
 logging:
   level:
     org.springframework.security: DEBUG
-    com.zaxxer.hikari: DEBUG
 
 spring:
   datasource:
-    # Use DATABASE_URL if provided (Railway format), otherwise fall back to components
-    url: ${DATABASE_URL:jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:spending}}
+    # Railway provides individual PG* variables - construct JDBC URL from them
+    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:spending}
     username: ${PGUSER:spending}
     password: ${PGPASSWORD:spending}
     driver-class-name: org.postgresql.Driver
@@ -29,11 +28,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
   data:
     redis:
-      host: ${REDISHOST:${REDIS_HOST:localhost}}
-      port: ${REDISPORT:${REDIS_PORT:6379}}
+      host: ${REDISHOST:localhost}
+      port: ${REDISPORT:6379}
 
 app:
   firebase:
