@@ -16,6 +16,7 @@ import java.util.Optional;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SpendingService {
@@ -60,20 +61,26 @@ public class SpendingService {
   }
 
   @CacheEvict(value = "insights", key = "#firebaseUid")
+  @Transactional
   public SpendingTransaction createTransaction(
       String firebaseUid,
       BigDecimal amount,
       String category,
       String merchant,
       LocalDate transactionDate) {
-    Optional<UserAccount> user = userRepository.findByFirebaseUid(firebaseUid);
-    if (user.isEmpty()) {
-      throw new IllegalStateException("User not found");
-    }
+    
+    // Get or create user - auto-register if user doesn't exist
+    UserAccount user = userRepository.findByFirebaseUid(firebaseUid)
+        .orElseGet(() -> {
+          UserAccount newUser = new UserAccount();
+          newUser.setFirebaseUid(firebaseUid);
+          newUser.setEmail(firebaseUid + "@auto-registered.local"); // Placeholder email
+          return userRepository.save(newUser);
+        });
 
     BigDecimal normalizedAmount = amount.setScale(2, RoundingMode.HALF_UP);
     SpendingTransaction transaction = new SpendingTransaction();
-    transaction.setUser(user.get());
+    transaction.setUser(user);
     transaction.setAmount(normalizedAmount);
     transaction.setCategory(category);
     transaction.setMerchant(merchant);
