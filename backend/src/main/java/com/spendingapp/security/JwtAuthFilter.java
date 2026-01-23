@@ -9,6 +9,7 @@ import java.util.Collections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -23,13 +24,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
   private static final Logger logger = LoggerFactory.getLogger(JwtAuthFilter.class);
 
   @Override
+  protected boolean shouldNotFilter(HttpServletRequest request) {
+    // Skip filter for OPTIONS (preflight) requests
+    return HttpMethod.OPTIONS.matches(request.getMethod());
+  }
+
+  @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
     String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
     String requestSummary = request.getMethod() + " " + request.getRequestURI();
 
     if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-      logger.info("Missing or invalid Authorization header for {}", requestSummary);
+      logger.debug("Missing or invalid Authorization header for {}", requestSummary);
       filterChain.doFilter(request, response);
       return;
     }
@@ -44,7 +51,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     try {
       FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
       String uid = decodedToken.getUid();
-      logger.info("Authenticated Firebase user {} for {}", uid, requestSummary);
+      logger.debug("Authenticated Firebase user {} for {}", uid, requestSummary);
       UsernamePasswordAuthenticationToken authentication =
           new UsernamePasswordAuthenticationToken(uid, null, Collections.emptyList());
       SecurityContextHolder.getContext().setAuthentication(authentication);
