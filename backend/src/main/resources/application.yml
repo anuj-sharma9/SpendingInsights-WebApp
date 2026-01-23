@@ -32,6 +32,7 @@ spring:
     redis:
       host: ${REDISHOST:localhost}
       port: ${REDISPORT:6379}
+      password: ${REDISPASSWORD:}
 
 app:
   firebase:
