@@ -1,5 +1,15 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
+
+# Actuator config for health checks
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
 
 logging:
   level:
@@ -23,5 +33,5 @@ spring:
 
 app:
   firebase:
-    serviceAccountPath: ${FIREBASE_SERVICE_ACCOUNT:/Users/anujsharma/Documents/SpendingWebApp/ServiceAccountInfo/ServiceAccount.json}
+    serviceAccountPath: ${FIREBASE_SERVICE_ACCOUNT:}
     serviceAccountJson: ${FIREBASE_SERVICE_ACCOUNT_JSON:}
