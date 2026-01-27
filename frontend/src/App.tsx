@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, User } from "firebase/auth";
 import { auth } from "./auth/firebase";
 import InsightsChart from "./components/InsightsChart";
-import DropletCursor from "./components/DropletCursor";
+import ClickSplash from "./components/DropletCursor";
 
 type Spending = {
   id: number;
@@ -377,7 +377,7 @@ export default function App() {
 
   return (
     <>
-      <DropletCursor />
+      <ClickSplash />
       <div className="app">
         <header className="header">
           <div>

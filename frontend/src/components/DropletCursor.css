@@ -1,32 +1,4 @@
-/* Droplet Cursor Styles */
-.droplet-cursor {
-  position: fixed;
-  width: 24px;
-  height: 32px;
-  pointer-events: none;
-  z-index: 99999;
-  transition: transform 0.08s ease-out;
-  will-change: transform, left, top;
-}
-
-.droplet-cursor.moving {
-  animation: dropletSway 0.3s ease-in-out infinite alternate;
-}
-
-.droplet-svg {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 2px 4px rgba(45, 90, 123, 0.3));
-}
-
-@keyframes dropletSway {
-  0% {
-    transform: translate(-50%, -50%) rotate(-5deg) scale(1);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(5deg) scale(1.05);
-  }
-}
+/* Click Splash Effect Styles */
 
 /* Splash Container */
 .splash-container {
@@ -95,14 +67,3 @@
     border-width: 1px;
   }
 }
-
-/* Make all interactive elements show pointer cursor internally but hide the actual cursor */
-button, a, input, [role="button"], .clickable {
-  cursor: none !important;
-}
-
-/* Ensure cursor is hidden everywhere */
-*, *::before, *::after {
-  cursor: none !important;
-}
-
