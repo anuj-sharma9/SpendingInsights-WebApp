@@ -1,4 +1,4 @@
-# 💧 Spending Insights
+# Spending Insights
 
 A modern, full-stack spending analytics web application that helps users track and visualize their spending habits with beautiful charts and insights.
 
@@ -9,7 +9,7 @@ A modern, full-stack spending analytics web application that helps users track a
 ![Tech Stack](https://img.shields.io/badge/Redis-7-DC382D?logo=redis)
 ![Tech Stack](https://img.shields.io/badge/Firebase-Auth-FFCA28?logo=firebase)
 
-## ✨ Features
+## Features
 
 - **User Authentication** — Secure login/signup with Firebase Authentication
 - **Transaction Management** — Add, view, and track spending transactions
@@ -19,7 +19,7 @@ A modern, full-stack spending analytics web application that helps users track a
 - **Modern UI** — Sky blue gradient theme with orange-yellow accent buttons
 - **Click Splash Effects** — Delightful water splash animations on click
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 | Technology | Version | Purpose |
@@ -55,7 +55,7 @@ A modern, full-stack spending analytics web application that helps users track a
 | **Docker Compose** | Local development orchestration |
 | **Nginx** | Reverse proxy & static file serving |
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 SpendingWebApp/
@@ -110,7 +110,7 @@ SpendingWebApp/
         └── nginx.conf
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -161,7 +161,7 @@ npm run dev
 
 Frontend dev server runs at **http://localhost:5173**
 
-## 🎨 Design System
+## Design System
 
 The app features a custom design system with:
 
@@ -171,7 +171,7 @@ The app features a custom design system with:
 - **Effects**: Glassmorphism cards, click splash animations
 - **Responsive**: Mobile-first design approach
 
-## 📊 API Endpoints
+## API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -182,12 +182,12 @@ The app features a custom design system with:
 
 All endpoints (except health) require Firebase JWT authentication via `Authorization: Bearer <token>` header.
 
-## 👨‍💻 Author
+## Author
 
 **Anuj Sharma**  
 🌐 [anujsharma9.com](https://anujsharma9.com)
 
 ---
 
-*Built with ☕ and 💧*
+
 
